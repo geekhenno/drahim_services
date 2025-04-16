@@ -1,26 +1,18 @@
-# Use the official Dart image from Docker Hub
-FROM dart:stable AS build
+# Use a Dart base image
+FROM google/dart:latest
 
-# Set the working directory
+# Set the working directory in the container
 WORKDIR /app
 
-# Copy the pubspec files and get dependencies
+# Copy the pubspec.yaml file and install dependencies
 COPY pubspec.* ./
 RUN dart pub get
 
-# Copy the rest of the app
+# Copy the entire application code into the container
 COPY . .
 
-# Build the Dart project
-RUN dart compile exe bin/server.dart -o bin/server
+# Build the Dart application
+RUN dart compile exe lib/main.dart -o main
 
-# Final stage to keep the image small
-FROM scratch
-COPY --from=build /runtime/ /
-COPY --from=build /app/bin/server /app/bin/
-
-# Expose the port your application will listen on
-EXPOSE 8080
-
-# Run the Dart server
-CMD ["/app/bin/server"]
+# Specify the command to run your application
+CMD ["./main"]
