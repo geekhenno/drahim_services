@@ -1,79 +1,71 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:drahim_services/drahim_service.dart';
+import 'package:drahim_services/label.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
+import 'dart:math';
 
 final router = Router()..get('/services', _handler);
-
 Future<Response> _handler(Request request) async {
-  List<DrahimService> enServices = [
+  List<DrahimService> services = [
     DrahimService(
-      title: 'Investment Calculator',
-      description: 'See how your investments grow over the years',
+      title: Label(en: 'Investment Calculator', ar: 'حاسبة الاستثمار'),
+      description: Label(
+        en: 'See how your investments grow over the years',
+        ar: 'اكتشف كم ستنمو استثماراتك على مدى السنوات القادمة',
+      ),
     ),
     DrahimService(
-      title: 'Link External Portfolio',
-      description: 'Track your external investments seamlessly',
+      title: Label(
+          en: 'Link External Portfolio', ar: 'ربط محفظة استثمارية خارجية'),
+      description: Label(
+        en: 'Track your external investments seamlessly',
+        ar: 'تابع استثماراتك الخارجية بكل سهولة',
+      ),
     ),
     DrahimService(
-      title: 'Custom Portfolios',
-      description: 'Design your portfolio to match your expertise and goals',
+      title: Label(en: 'Custom Portfolios', ar: 'تخصيص المحافظ'),
+      description: Label(
+        en: 'Design your portfolio to match your expertise and goals',
+        ar: 'صمم محفظتك الاستثمارية بما يناسب خبرتك وأهدافك',
+      ),
     ),
     DrahimService(
-      title: 'Investment Goals',
-      description: 'Set your goals and plan step by step to achieve them',
+      title: Label(en: 'Investment Goals', ar: 'الأهداف الاستثمارية'),
+      description: Label(
+        en: 'Set your goals and plan step by step to achieve them',
+        ar: 'حدد أهدافك وخطط لتحقيقها خطوة بخطوة',
+      ),
     ),
     DrahimService(
-      title: 'Monthly Investments',
-      description:
-          'Enable monthly deductions to meet your investment goals with ease',
+      title: Label(en: 'Monthly Investments', ar: 'الاستقطاع الشهري'),
+      description: Label(
+        en: 'Enable monthly deductions to meet your investment goals with ease',
+        ar: 'فعّل الاستقطاع الشهري لتحقيق أهدافك الاستثمارية بسهولة',
+      ),
     ),
     DrahimService(
-      title: 'Create Investment Portfolio',
-      description: 'Create a portfolio tailored to your financial goals',
-    ),
-  ];
-  List<DrahimService> arServices = [
-    DrahimService(
-      title: 'حاسبة الاستثمار',
-      description: 'اكتشف كم ستنمو استثماراتك على مدى السنوات القادمة',
-    ),
-    DrahimService(
-      title: 'ربط محفظة استثمارية خارجية',
-      description: 'تابع استثماراتك الخارجية بكل سهولة',
-    ),
-    DrahimService(
-      title: 'تخصيص المحافظ',
-      description: 'صمم محفظتك الاستثمارية بما يناسب خبرتك وأهدافك',
-    ),
-    DrahimService(
-      title: 'الأهداف الاستثمارية',
-      description: 'حدد أهدافك وخطط لتحقيقها خطوة بخطوة',
-    ),
-    DrahimService(
-      title: 'الاستقطاع الشهري',
-      description: 'فعّل الاستقطاع الشهري لتحقيق أهدافك الاستثمارية بسهولة',
-    ),
-    DrahimService(
-      title: 'فتح محفظة استثمارية',
-      description: 'أنشئ محفظة استثمارية تناسب أهدافك المالية',
+      title:
+          Label(en: 'Create Investment Portfolio', ar: 'فتح محفظة استثمارية'),
+      description: Label(
+        en: 'Create a portfolio tailored to your financial goals',
+        ar: 'أنشئ محفظة استثمارية تناسب أهدافك المالية',
+      ),
     ),
   ];
+  final random = Random();
+  final randomNumber = random.nextInt(3) + 2;
+  await Future.delayed(Duration(seconds: randomNumber));
 
-  await Future.delayed(Duration(seconds: 2));
-// GET /services
   return Response.ok(
     jsonEncode(
       {
-        'en': {
-          'main_service': 'Investment Services',
-          'services': enServices,
-        },
-        'ar': {
-          'main_service': 'خدمات الاستثمار',
-          'services': arServices,
-        }
+        'main_service': Label(
+          en: 'Investment Services',
+          ar: 'خدمات الاستثمار',
+        ).toJson(),
+        'services': services.map((s) => s.toJson()).toList(),
       },
     ),
     headers: {

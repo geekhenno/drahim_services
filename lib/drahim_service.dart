@@ -1,6 +1,8 @@
+import 'package:drahim_services/label.dart';
+
 class DrahimService {
-  final String title;
-  final String description;
+  final Label title;
+  final Label description;
 
   const DrahimService({
     required this.title,
