@@ -12,7 +12,7 @@ RUN dart pub get
 COPY . .
 
 # Build the Dart application
-RUN dart compile exe lib/main.dart -o main
+RUN dart compile exe lib/bin/server.dart -o main
 
 # Specify the command to run your application
-CMD ["./main"]
+CMD ["./bin/server"]
