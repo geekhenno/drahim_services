@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:drahim_services/drahim_service.dart';
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart';
@@ -62,14 +63,21 @@ Future<Response> _handler(Request request) async {
 
   await Future.delayed(Duration(seconds: 2));
 // GET /services
-  return Response.ok(jsonEncode({
-    'en': {
-      'main_service': 'Investment Services',
-      'services': enServices,
+  return Response.ok(
+    jsonEncode(
+      {
+        'en': {
+          'main_service': 'Investment Services',
+          'services': enServices,
+        },
+        'ar': {
+          'main_service': 'خدمات الاستثمار',
+          'services': arServices,
+        }
+      },
+    ),
+    headers: {
+      HttpHeaders.contentTypeHeader: 'application/json',
     },
-    'ar': {
-      'main_service': 'خدمات الاستثمار',
-      'services': arServices,
-    }
-  }));
+  );
 }
