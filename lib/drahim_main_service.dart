@@ -13,9 +13,11 @@ class DrahimMainService {
   Map<String, dynamic> toJson() {
     return {
       'title': title.toJson(),
-      'services': services.map(
-        (e) => e.toJson(),
-      ),
+      'services': services
+          .map(
+            (e) => e.toJson(),
+          )
+          .toList(),
     };
   }
 
