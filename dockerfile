@@ -15,4 +15,4 @@ COPY . .
 RUN dart compile exe lib/bin/server.dart -o main
 
 # Specify the command to run your application
-CMD ["./bin/server"]
+CMD ["./main"]
