@@ -14,7 +14,7 @@ Future<Response> _handler(Request request) async {
   await Future.delayed(Duration(seconds: randomNumber));
 
   return Response.ok(
-    jsonEncode(services),
+    {'services': jsonEncode(services)},
     headers: {
       HttpHeaders.contentTypeHeader: 'application/json',
     },
